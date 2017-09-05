@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>疾风劲酷</title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" href="images/Icon57.png" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" href="css/gameing.css">
+	<script src="js/jquery-2.0.3.js"></script>
+    <style>
+        #bg{
+            width: 800px;
+            height: 500px;
+            margin: auto auto;
+            position: absolute;
+			top: 0;
+			left: 0;
+			bottom:0;
+			right:0;
+            overflow: hidden;
+        }
+        #map2{
+            width: 1600px;
+            height: 198px;
+            position: absolute;
+            left: 0px;
+            top:0;
+        }
+		#map3{
+			width: 1600px;
+			height: 600px;
+			position: absolute;
+			left: 1600px;
+			top:0;
+			background: #000;
+		}
+        canvas{
+            position: absolute;
+        }
+        #canvas4,canvas5{
+            z-index: 10;
+        }
+        #canvas1{
+            z-index: 1000;
+        }
+		#suspend{
+			position: absolute;
+			top: -7px;
+			right: 20px;
+			display: inline-block;
+			background: url('images/ui_game_n.png') no-repeat -261px -235px;
+			width: 82px;
+			height: 81px;
+			transform: scale(0.8);
+		}
+    </style>
+</head>
+<body>
+	<div id="content">
+		<audio src="../Sound/bgm/r_bgm_02.ogg" id="audio_bgm" loop="loop" ></audio>
+	<div id="login_interface">
+		<!--弹出框-->
+		<div id="register_box">
+			<a id="regi_close">×</a>
+			<p class="regiP"><a>注册</a><span>已有账号?  </span><span id="now_login">马上登录</span></p>
+			<div class="register_btns">
+				<!--<p class="atten">请用手机号码注册</p>-->
+				<input type="text" name="text" id="regi_user" placeholder="用户名" />
+				<p id="check_user">请输入4到16位(字母，数字，下划线，减号)的用户名</p>
+				<input type="text" id="telphone"  placeholder="手机号码"/>
+				<p id="check_tel">请输入以1开头第二位是3/4/5/7/8的11位手机号码</p>
+				<input type="password" id="passowrd" placeholder="密码" />
+				<button id="regi_btn" >注册</button>
+			</div>
+		</div>
+		<div id="login_box">
+			<a id="login_close">×</a>
+			<p class="loginP"><a>登录</a><span>还没有账号?  </span><span id="now_re">马上注册</span></p>
+			<div class="login_btns">
+				<!--<p class="atten">手机号码</p>-->
+				<input type="text" name="text" id="login_user" placeholder="请输入你的用户名" />
+				<!--<input type="text" id="login_telphone"  placeholder="请输入您的手机号码"/>-->
+				<p id="check_luser">请输入4到16位(字母，数字，下划线，减号)的用户名</p>
+				<input type="password" id="login_password" placeholder="请输入您的密码" />
+				<button id="login_btn">登录</button>
+			</div>
+		</div>
+		<input type="button" value="注 册" id="register" />
+		<input type="button" value="登 录" id="login" />
+	</div>
+	<div id="start_interface">
+		<div class="animation">
+			<div class="wrapper">
+				<div class="main_head">
+					<ul>
+						<li id="player"></li>
+						<!--<li class="about_game">-->
+						<!--<a>关于游戏</a>-->
+						<!--<div id="game_indro">-->
+						<!--<a>X</a>-->
+						<!--<p>游戏的介绍</p>-->
+						<!--</div>-->
+						<!--</li>-->
+						<li id="ta_head_audio3" onclick="playOrPause(this)">
+							<a class='c_audio'></a>
+							<a class="audio_text">声音</a>
+						</li>
+
+
+					</ul>
+
+				</div>
+				<div class="roles">
+					<div class="role" id="role"></div>
+					<div id="change_roles">
+						<div class="roles_top">
+							<div id="back">
+								<div class="back_tip"></div>
+							</div>
+							<div class="title_per_back">
+								<div class="title_person"></div>
+							</div>
+							<div class="title">角色选择</div>
+						</div>
+						<div class="roles_con">
+							<div class="role_frames">
+								<ul id="roles_list" style="left:4px">
+									<li class="part1">
+										<div class="role_name">双枪小帅
+											<span></span>
+										</div>
+										<div class="role_persons ">
+											<div class="role_p role1">
+												<div class="shadow"></div>
+											</div>
+										</div>
+										<div class="skill_decri">
+											三段跳
+										</div>
+
+									</li>
+									<li>
+										<div class="role_name">魔女娜娜
+											<span ></span>
+										</div>
+										<div class="role_persons ">
+											<div class="role_p role2">
+												<div class="shadow"></div>
+											</div>
+										</div>
+										<div class="skill_decri">
+											技能：冲刺
+										</div>
+										<div class="cost"></div>
+									</li>
+									<li>
+										<div class="role_name">猫小萌
+											<span></span>
+										</div>
+										<div class="role_persons ">
+											<div class="role_p role3">
+												<div class="shadow"></div>
+											</div>
+										</div>
+										<div class="skill_decri">
+											三段跳
+										</div>
+										<div class="cost"></div>
+									</li>
+									<li>
+										<div class="role_name">音速小飞
+											<span ></span>
+										</div>
+										<div class="role_persons ">
+											<div class="role_p role4">
+												<div class="shadow"></div>
+											</div>
+										</div>
+										<div class="skill_decri">
+											技能：自带护盾
+										</div>
+										<div class="cost"></div>
+									</li>
+									<li>
+										<div class="role_name">金枪小帅
+											<span ></span>
+										</div>
+										<div class="role_persons ">
+
+											<div class="role_p role5">
+												<div class="shadow"></div>
+											</div>
+										</div>
+										<div class="skill_decri">
+											技能:点石成金
+										</div>
+										<div class="cost"></div>
+									</li>
+									<li>
+										<div class="role_name">刀锋宝贝
+											<span></span>
+										</div>
+										<div class="role_persons ">
+
+											<div class="role_p role6">
+												<div class="shadow"></div>
+											</div>
+										</div>
+										<div class="skill_decri">
+											三段跳，滑翔
+										</div>
+										<div class="cost"></div>
+									</li>
+
+								</ul>
+							</div>
+							<div class="prev">＜</div>
+							<div class="next">＞</div>
+						</div>
+					</div>
+				</div>
+				<div class="startop">
+					<div class="go_game"><span class="sh_text" id="game_start">进入游戏</span></div>
+					<div class="shop_game">
+						<span class="sh_text" id="shop_text">商  店</span>
+						<div class="shop_box">
+							<div class="shop_head">
+								<div class="head_back">
+									<span class="back_ti"></span>
+								</div>
+								<div class="head_title">
+							   <span class="title_bg">
+								   <i></i>
+							   </span>
+									<span class="title_tex">道具购买</span>
+								</div>
+								<div class="head_ti"></div>
+								<div class="clear"></div>
+							</div>
+							<div class="shop_buy">
+								<ul class="buy_cons">
+                                    <li class="cons_part">
+                                        <ul class="con_box">
+                                            <li class="save" style="margin: -6px 0px 0px -3px">
+                                                <a class="tool_num"></a>
+                                                <div class="save_par save_per"></div>
+
+                                            </li>
+                                            <li class="part_decri">
+                                                <div class="shop_pay">
+                                                    <div class="jingbi"></div>
+                                                    <span class="money">300</span>
+                                                </div>
+                                                <p>保护主角，吸收一次伤害</p>
+                                            </li>
+                                            <li class="buy_btn">购买</li>
+                                        </ul>
+                                    </li>
+                                    <li class="cons_part">
+                                        <ul class="con_box">
+                                            <li class="save" style="margin:-7px 0px 0px -78px">
+                                                <a class="tool_num"></a>
+                                                <div class="save_par jin_yin"></div>
+                                            </li>
+                                            <li class="part_decri">
+                                                <div class="shop_pay">
+                                                    <div class="jingbi"></div>
+                                                    <span class="money">500</span>
+                                                </div>
+                                                <p>金币加倍</p>
+                                            </li>
+                                            <li class="buy_btn">购买</li>
+                                        </ul>
+                                    </li>
+                                    <li class="cons_part">
+                                        <ul class="con_box">
+                                            <li class="save" style="margin:-7px 0px 0px -80px">
+                                                <a class="tool_num"></a>
+                                                <div class="save_par pass_juan" style="transform: scale(0.65)"></div>
+                                            </li>
+                                            <li class="part_decri">
+                                                <div class="shop_pay">
+                                                    <div class="jingbi"></div>
+                                                    <span class="money">800</span>
+                                                </div>
+                                                <p>可以让关卡直接三星通过</p>
+                                            </li>
+                                            <li class="buy_btn">购买</li>
+                                        </ul>
+                                    </li>
+                                    <li class="cons_part">
+                                        <ul class="con_box">
+                                            <li class="save" style="margin:-7px 0px 0px -80px">
+                                                <a class="tool_num"></a>
+                                                <div class="save_par chon_ci" ></div>
+                                            </li>
+                                            <li class="part_decri">
+                                                <div class="shop_pay">
+                                                    <div class="buy_xx"></div>
+                                                    <span class="money">5</span>
+                                                </div>
+                                                <p>开局冲刺100米</p>
+                                            </li>
+                                            <li class="buy_btn">购买</li>
+                                        </ul>
+                                    </li>
+                                    <li class="cons_part">
+                                        <ul class="con_box">
+                                            <li class="save" style="margin:-7px 0px 0px -78px">
+                                                <a class="tool_num"></a>
+                                                <div class="save_par larger"></div>
+                                            </li>
+                                            <li class="part_decri">
+                                                <div class="shop_pay">
+                                                    <div class="buy_xx"></div>
+                                                    <span class="money">7</span>
+                                                </div>
+                                                <p>摧毁障碍物</p>
+                                            </li>
+                                            <li class="buy_btn">购买</li>
+                                        </ul>
+                                    </li>
+                                    <li class="cons_part">
+                                        <ul class="con_box">
+                                            <li class="save" style="margin:-7px 0px 0px -80px">
+                                                <a class="tool_num"></a>
+                                                <div class="save_par add_num"></div>
+                                            </li>
+                                            <li class="part_decri">
+                                                <div class="shop_pay">
+                                                    <div class="buy_xx"></div>
+                                                    <span class="money">8</span>
+                                                </div>
+                                                <p>时间增加5秒钟</p>
+                                            </li>
+                                            <li class="buy_btn">购买</li>
+                                        </ul>
+                                    </li>
+								</ul>
+							</div>
+							<div class="shop_foot"></div>
+						</div>
+					</div>
+					<div class="end_game"><span class="sh_text" id="out">退出登录</span></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div id="task_interface">
+		<div id="tasks_inter_box">
+			<div class="task_head">
+
+				<li id="task_back">
+					<div class="head_back" id="task_re">
+						<span class="back_ti"></span>
+					</div>
+				</li>
+				<li class="ta_head_money">
+					<div class="moneys"></div>
+					<span id="moneys_jin">0</span>
+					<div class="add"></div>
+				</li>
+				<li class="ta_head_star">
+					<div class="stars"></div>
+					<span id="stars">0</span>
+					<div class="add"></div>
+				</li>
+				<!--<li id="ta_head_audio" style="margin-top: 13px">-->
+					<!--<a class='c_audio'></a>-->
+					<!--<a class="audio_text">声音</a>-->
+				<!--</li>-->
+				<div class="clear"></div>
+
+			</div>
+			<div class="task_cons">
+				<ul id="all_hua">
+					<li class="gua task1">
+						<p class="ev_gua_stars" >
+							<a class="task_star1">
+								<span class="star1_no"></span>
+								<span class="star1_yes"></span>
+							</a>
+							<a class="task_star2">
+								<span class="star2_no"></span>
+								<span class="star2_yes"></span>
+							</a>
+							<a class="task_star3">
+								<span class="star3_no"></span>
+								<span class="star3_yes"></span>
+							</a>
+						</p>
+						<p class="levels level_1" style="margin-top:95px"></p>
+
+					</li>
+					<li class="dian dia1"></li>
+					<li class="gua task2">
+						<p class="ev_gua_stars">
+							<a class="task_star1">
+								<span class="star1_no"></span>
+								<span class="star1_yes"></span>
+							</a>
+							<a class="task_star2">
+								<span class="star2_no"></span>
+								<span class="star2_yes"></span>
+							</a>
+							<a class="task_star3">
+								<span class="star3_no"></span>
+								<span class="star3_yes"></span>
+							</a>
+						</p>
+						<p class="levels level_2"></p>
+					</li>
+					<li class="dian dia2"></li>
+					<li class="gua task3">
+						<p class="ev_gua_stars">
+							<a class="task_star1">
+								<span class="star1_no"></span>
+								<span class="star1_yes"></span>
+							</a>
+							<a class="task_star2">
+								<span class="star2_no"></span>
+								<span class="star2_yes"></span>
+							</a>
+							<a class="task_star3">
+								<span class="star3_no"></span>
+								<span class="star3_yes"></span>
+							</a>
+						</p>
+						<p class="levels level_3"></p>
+					</li>
+					<li class="dian dia3"></li>
+					<li class="dian dia4"></li>
+					<li class="gua task4">
+						<p class="ev_gua_stars">
+							<a class="task_star1">
+								<span class="star1_no"></span>
+								<span class="star1_yes"></span>
+							</a>
+							<a class="task_star2">
+								<span class="star2_no"></span>
+								<span class="star2_yes"></span>
+							</a>
+							<a class="task_star3">
+								<span class="star3_no"></span>
+								<span class="star3_yes"></span>
+							</a>
+						</p>
+						<p class="levels level_4"></p>
+					</li>
+					<li class="dian dia5"></li>
+					<li class="gua task5">
+						<p class="levels level_5"></p>
+					</li>
+					<li class="dian dia6"></li>
+					<li class="gua task6">
+						<p class="levels level_6"></p>
+					</li>
+					<li class="dian dia7"></li>
+					<li class="dian dia8"></li>
+					<li class="gua task7">
+						<p class="levels level_7"></p>
+					</li>
+					<div class="clear"></div>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="every_task">
+			<div class="task_head">
+				<ul >
+					<li id="task_back2">
+						<div class="head_back" id="task_re2">
+							<span class="back_ti"></span>
+						</div>
+					</li>
+					<li class="ta_head_money">
+						<div class="moneys"></div>
+						<span id="moneys_jin2">0</span>
+						<div class="add"></div>
+
+					</li>
+					<li class="ta_head_star">
+						<div class="stars"></div>
+						<span id="stars_2">0</span>
+						<div class="add"></div>
+
+					</li>
+					<!--<li id="ta_head_audio2" style="margin-top: 13px">-->
+						<!--<a class='c_audio'></a>-->
+						<!--<a class="audio_text">声音</a>-->
+					<!--</li>-->
+
+					<div class="clear"></div>
+				</ul>
+
+			</div>
+			<div class="ev_task_box">
+				<div class="gua_decri">
+					<div class="gua_decri_box">
+						<div class="decri_head">第n关</div>
+						<div class="decri_con">
+							<p class="require">以下为本关任务，完成第一颗<span></span>的任务即可过关</p>
+							<div class="request">
+								<div class="yes_no">未过关</div>
+								<ul class="tong_star">
+									<!-- 通不通过，改变类名 -->
+									<li class="tong_no"></li>
+									<li class="tong_no"></li>
+									<li class="tong_no"></li>
+								</ul>
+								<ul class="tong_desc" style="display: block">
+									<li>收集金币<span>50</span>个</li>
+									<li>收集金币<span>100</span>个</li>
+									<li>收集金币<span>150</span>个</li>
+								</ul>
+								<ul class="tong_desc" >
+									<li>收集熊头<span>100</span>个</li>
+									<li>收集熊头<span>150</span>个</li>
+									<li>收集熊头<span>200</span>个</li>
+								</ul>
+								<ul class="tong_desc" >
+									<li>收集狐狸头<span>100</span>个</li>
+									<li>收集狐狸头<span>150</span>个</li>
+									<li>收集狐狸头<span>200</span>个</li>
+								</ul>
+								<ul class="tong_desc" >
+									<li>收集金币<span>500</span>个</li>
+									<li>收集金币<span>450</span>个</li>
+									<li>收集金币<span>700</span>个</li>
+								</ul>
+								<ul class="tong_desc" >
+									<li>收集金币<span>500</span>个</li>
+									<li>收集金币<span>450</span>个</li>
+									<li>收集金币<span>700</span>个</li>
+								</ul>
+								<ul class="tong_desc" >
+									<li>收集金币<span>500</span>个</li>
+									<li>收集金币<span>450</span>个</li>
+									<li>收集金币<span>700</span>个</li>
+								</ul>
+								<ul class="tong_desc" >
+									<li>收集金币<span>500</span>个</li>
+									<li>收集金币<span>450</span>个</li>
+									<li>收集金币<span>700</span>个</li>
+								</ul>
+							</div>
+							<p class="maybe">本关卡可以使用的道具</p>
+							<div class="maybe_box">
+								<ul class="may_1">
+									<li style="margin-left: 15px">
+										<div class="prize_box">
+											<div class="sel_tool">√</div>
+											<div class="prize_bg prize_1"></div>
+											<!--<div class="may_num">-->
+												<!--<span></span>-->
+												<!--<span></span>-->
+												<!--<span></span>-->
+												<!--<span></span>-->
+											<!--</div>-->
+										</div>
+										<div class="prize_name">保护盾</div>
+									</li>
+									<li>
+										<div class="prize_box">
+											<div class="sel_tool">√</div>
+											<div class="prize_bg prize_2"></div>
+
+										</div>
+										<div class="prize_name">三星通关</div>
+									</li>
+									<li>
+										<div class="prize_box">
+											<div class="sel_tool">√</div>
+											<div class="prize_bg prize_31"></div>
+
+										</div>
+										<div class="prize_name">金币加倍</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="ta_ro_sta">
+					<div class="sele_role"></div>
+					<!--<div id="change_role"><p>切换角色</p></div>-->
+					<div id="begin"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <div id="bg" style="display:none">
+        <canvas id="canvas1" width="800" height="500"></canvas>
+        <div id="map2">
+            <canvas id="canvas2" width="1600" height="500" ></canvas>
+            <canvas id="canvas4" width="1600" height="500" ></canvas>
+        </div>
+		<div id="map3">
+			<canvas id="canvas3" width="1600" height="500" ></canvas>
+            <canvas id="canvas5" width="1600" height="500" ></canvas>
+		</div>
+
+		<p id="suspend"></p>
+
+		<!-- 失败成功暂停界面 -->
+		<div id="fail_sucess_stop">
+			<!--  失败界面开始 -->
+			<div id="fail_box" style="display:none">
+				<div class="fail_star">
+					<li class="fs_li_11"><a class="st_a1_1"></a></li>
+					<li class="fs_li_21"><a class="st_a2_1"></a></li>
+					<li class="fs_li_31"><a class="st_a3_1"></a></li>
+				</div>
+				<p class="fail_number">第n关</p>
+				<div class="fail_title">
+					<div class="fail_bg"></div>
+					<div class="fail_stars">
+						<a class="f_star"></a>
+						<a id="star_number">0</a>
+					</div>
+				</div>
+				<div class="fail_req">要达到一星&nbsp;&nbsp;<span class="req_star"></span>&nbsp;&nbsp;目标才能过关哦 </div>
+				<!--<p class="req_start1">跑过<span id="req_start1">300</span>米</p>-->
+				<div class="fail_btn">
+					<a class="btn_return">返 回</a>
+					<a class="btn_again  fail_again">再来一次</a>
+				</div>
+			</div>
+			<!-- 失败界面结束 -->
+			<!--  成功界面开始 -->
+			<div id="sucess_box" style="display:none">
+				<div class="sucess_star">
+					<!--fs_li_11，st_a1_1是li，a不亮的类名，fs_li_12，st_a1_2是li，a亮的类名-->
+					<li class=" fs_li_11"><a class="st_a1_1"></a></li>
+					<li class=" fs_li_21"><a class="st_a2_1"></a></li>
+					<li class=" fs_li_31"><a class="st_a3_1"></a></li>
+				</div>
+				<p class="fail_number">第1关</p>
+				<div class="fail_title">
+					<div class="fail_bg"></div>
+					<div class="fail_stars">
+						<a class="f_star"></a>
+						<a id="star_number2">0</a>
+					</div>
+				</div>
+				<p id="t_yes_text">通过的关卡的哪几颗星星的要求</p>
+				<div class="fail_btn">
+					<a class="btn_return">返 回</a>
+					<a class="btn_again  next_Checkpoint">下一关</a>
+				</div>
+			</div>
+			<!-- 成功界面结束 -->
+			<!-- 暂停界面开始 -->
+			<div id="stop_box" style="display:none">
+				<div class="stop_con">
+					<div class="st_head">闯 关 目 标</div>
+					<div class="st_main">
+						<div class="tip"></div>
+						<ul class="st_req" id="st_req1">
+							<li><span></span>收集金币50个</li>
+							<li><span></span>收集金币100个</li>
+							<li><span></span>收集金币150个</li>
+						</ul>
+						<ul class="st_req" id="st_req2">
+							<li><span></span>收集熊头100个</li>
+							<li><span></span>收集熊头150个</li>
+							<li><span></span>收集熊头200个</li>
+						</ul>
+						<ul class="st_req" id="st_req3">
+							<li><span></span>收集狐狸头100个</li>
+							<li><span></span>收集狐狸头150个</li>
+							<li><span></span>收集狐狸头200个</li>
+						</ul>
+					</div>
+				</div>
+				<div class="st_btns">
+					<a id="Checkpoint"><span></span>返回关卡</a>
+					<a id="Restart"><span></span>重新开始</a>
+					<a id="Continue"><span></span>继续游戏</a>
+				</div>
+			</div>
+			<!-- 暂停界面结束 -->
+		</div>
+    </div>
+
+	<!--背景音乐-->
+	<audio src="Sound/bgm/r_bgm_01.ogg" id="gameBgm" autoplay="autoplay" loop="loop"></audio>
+	<audio src="Sound/sfx/r_second_jump_boy.ogg" id="FirJumpm"></audio>
+	<audio src="Sound/sfx/r_jump.ogg" id="SecJumpm"></audio>
+	<audio src="Sound/sfx/r_landing.ogg" id="landm"></audio>
+
+    <script src="js/main.js"></script>
+    <script src="js/commonFunctions.js"></script>
+    <script src="js/renwu.js"></script>
+    <script src="js/action.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/zhangai.js"></script>
+    <script src="js/eat.js"></script>
+	<script src="js/collision.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/Data.js"></script>
+</body>
+</html>
